@@ -1,0 +1,22 @@
+# Web Framework
+Django==5.0.1
+djangorestframework==3.14.0
+django-cors-headers==4.3.1
+
+# Database
+psycopg2-binary==2.9.9
+
+# Auth & Security
+django-allauth==0.60.1
+djangorestframework-simplejwt==5.3.1
+
+# Utils
+python-dotenv==1.0.0
+Pillow==10.2.0  # for image processing
+requests==2.31.0
+
+# Development
+black==24.1.0
+flake8==7.0.0
+isort==5.13.2
+django-debug-toolbar==4.3.0 
