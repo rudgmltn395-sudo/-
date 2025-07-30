@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const characters = [
   {
@@ -77,7 +78,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center">
-              <a href="/" className="text-3xl font-bold text-orange-600 hover:text-orange-700">짱구 도감</a>
+              <Link href="/" className="text-xl font-bold">
+                짱구는 못말려
+              </Link>
               <span className="ml-2 text-sm text-gray-500">Crayon Shin-chan Encyclopedia</span>
             </div>
             <nav className="hidden md:flex space-x-8">
@@ -107,10 +110,12 @@ export default function Home() {
           {characters.map((character) => (
             <div key={character.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <div className={`bg-${character.color}-500 h-64 relative overflow-hidden`}>
-                <img
+                <Image
                   src={character.imagePath}
                   alt={character.name}
-                  className="w-full h-full object-cover hover:scale-110 transition-transform"
+                  width={500}
+                  height={300}
+                  className="w-full h-auto"
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-20"></div>
                 <div className="absolute bottom-4 left-4 text-white">
