@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const characters = [
   {
@@ -71,6 +72,27 @@ const characters = [
 ];
 
 export default function Home() {
+  const [apiMessage, setApiMessage] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchApiMessage = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch('http://localhost:8000/api/hello/');
+        const data = await response.json();
+        setApiMessage(data.message);
+      } catch (error) {
+        console.error('API 호출 오류:', error);
+        setApiMessage("API 서버에 연결할 수 없습니다. 로컬 서버가 실행 중인지 확인해주세요.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchApiMessage();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-100 to-orange-100">
       {/* Header */}
@@ -93,6 +115,18 @@ export default function Home() {
         </div>
       </header>
 
+      {/* API Status */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="bg-white rounded-lg shadow-md p-4">
+          <h3 className="text-lg font-semibold mb-2">API 서버 상태</h3>
+          {isLoading ? (
+            <p className="text-blue-600">API 서버에 연결 중...</p>
+          ) : (
+            <p className="text-gray-700">{apiMessage}</p>
+          )}
+        </div>
+      </div>
+
       {/* Hero Section */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
@@ -109,54 +143,41 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {characters.map((character) => (
             <div key={character.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                              <div className={`bg-${character.color}-500 h-64 relative overflow-hidden`}>
-                  <img
-                    src={character.imagePath}
-                    alt={character.name}
-                    className="w-full h-full object-cover hover:scale-110 transition-transform"
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+              <div className={`bg-${character.color}-500 h-64 relative overflow-hidden`}>
+                <img
+                  src={character.imagePath}
+                  alt={character.name}
+                  className="w-full h-full object-cover hover:scale-110 transition-transform"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-20"></div>
                 <div className="absolute bottom-4 left-4 text-white">
                   <h3 className="text-2xl font-bold mb-1">{character.name}</h3>
                   <p className="text-sm opacity-90">{character.japaneseName}</p>
                 </div>
               </div>
               <div className="p-6">
-                <p className="text-gray-600 mb-4 text-center">
-                  {character.description}
-                </p>
-                <div className="mb-4">
-                  <h4 className="font-semibold text-gray-800 mb-2">성격</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {character.personality.map((trait, index) => (
-                      <span
-                        key={index}
-                        className={`px-3 py-1 bg-${character.color}-100 text-${character.color}-700 rounded-full text-sm`}
-                      >
-                        {trait}
-                      </span>
-                    ))}
-                  </div>
+                <p className="text-gray-600 mb-4">{character.description}</p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {character.personality.map((trait, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm"
+                    >
+                      {trait}
+                    </span>
+                  ))}
                 </div>
-                <div className="mb-4">
-                  <h4 className="font-semibold text-gray-800 mb-2">특징</h4>
-                  <div className="flex flex-wrap gap-2">
+                <div className="border-t pt-4">
+                  <h4 className="font-semibold mb-2">특징:</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
                     {character.features.map((feature, index) => (
-                      <span
-                        key={index}
-                        className={`px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm`}
-                      >
+                      <li key={index} className="flex items-center">
+                        <span className="text-orange-500 mr-2">•</span>
                         {feature}
-                      </span>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </div>
-                <a
-                  href="/characters"
-                  className={`w-full bg-${character.color}-500 text-white py-3 px-4 rounded-lg text-center block transition-colors hover:bg-${character.color}-600`}
-                >
-                  자세히 보기
-                </a>
               </div>
             </div>
           ))}
@@ -186,7 +207,7 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-8 mt-12">
+      <footer className="bg-gray-800 text-white py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-gray-300">
             © 2024 짱구 도감. 모든 권리는 원작자에게 있습니다.
