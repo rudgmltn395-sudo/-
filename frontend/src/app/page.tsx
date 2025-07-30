@@ -109,15 +109,13 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {characters.map((character) => (
             <div key={character.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className={`bg-${character.color}-500 h-64 relative overflow-hidden`}>
-                <Image
-                  src={character.imagePath}
-                  alt={character.name}
-                  width={500}
-                  height={300}
-                  className="w-full h-auto"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+                              <div className={`bg-${character.color}-500 h-64 relative overflow-hidden`}>
+                  <img
+                    src={character.imagePath}
+                    alt={character.name}
+                    className="w-full h-full object-cover hover:scale-110 transition-transform"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-20"></div>
                 <div className="absolute bottom-4 left-4 text-white">
                   <h3 className="text-2xl font-bold mb-1">{character.name}</h3>
                   <p className="text-sm opacity-90">{character.japaneseName}</p>

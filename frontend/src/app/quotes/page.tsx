@@ -157,7 +157,7 @@ export default function QuotesPage() {
                     <span className="font-bold">{quote.likes.toLocaleString()}</span>
                   </div>
                 </div>
-                <p className="text-xl font-medium mb-2">"{quote.content}"</p>
+                <p className="text-xl font-medium mb-2">&ldquo;{quote.content}&rdquo;</p>
                 <p className="text-sm opacity-75">{quote.context}</p>
               </div>
               <div className="p-4">
