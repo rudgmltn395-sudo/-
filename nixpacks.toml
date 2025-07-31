@@ -1,17 +1,11 @@
 [phases.setup]
-nixPkgs = ["python39", "python39Packages.pip", "nodejs", "npm"]
+nixPkgs = ["python311", "python311Packages.pip"]
 
 [phases.install]
-cmds = [
-    "cd backend && pip install -r requirements.txt",
-    "cd frontend && npm install"
-]
+cmds = ["pip install -r backend/requirements.txt"]
 
 [phases.build]
-cmds = [
-    "cd backend && python manage.py collectstatic --noinput",
-    "cd frontend && npm run build"
-]
+cmds = ["python backend/manage.py collectstatic --noinput"]
 
 [start]
-cmd = "cd backend && python manage.py runserver 0.0.0.0:$PORT" 
+cmd = "python backend/manage.py runserver 0.0.0.0:$PORT" 
