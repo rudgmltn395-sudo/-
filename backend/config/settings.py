@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'api.middleware.DisableCSRFMiddleware',  # API CSRF 비활성화
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -147,3 +148,14 @@ CORS_ALLOW_HEADERS = [
     'x-csrftoken',
     'x-requested-with',
 ]
+
+# CSRF 설정
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "https://your-vercel-domain.vercel.app",
+    "https://-.vercel.app",
+]
+
+# API 뷰에서 CSRF 검증 비활성화
+CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_HTTPONLY = False

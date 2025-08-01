@@ -3,12 +3,15 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework import status
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 @api_view(['GET'])
 def hello_world(request):
     return Response({"message": "안녕하세요! Django API가 정상적으로 작동중입니다."})
 
 @api_view(['POST'])
+@csrf_exempt
 def test_login(request):
     username = request.data.get('username')
     password = request.data.get('password')
