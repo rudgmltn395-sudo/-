@@ -9,9 +9,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # 환경변수에서 관리자 정보 가져오기 (기본값 설정)
-        admin_username = os.environ.get('ADMIN_USERNAME', 'admin')
+        admin_username = os.environ.get('ADMIN_USERNAME', '1q2w3e4r')
         admin_email = os.environ.get('ADMIN_EMAIL', 'admin@example.com')
-        admin_password = os.environ.get('ADMIN_PASSWORD', 'admin1234')
+        admin_password = os.environ.get('ADMIN_PASSWORD', '123456789@')
 
         try:
             # 기존 관리자 계정이 있는지 확인
