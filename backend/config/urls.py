@@ -17,8 +17,23 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from django.http import JsonResponse
+
+def root_view(request):
+    return JsonResponse({
+        "message": "짱구는 못말려 캐릭터 소개 API 서버",
+        "version": "1.0.0",
+        "available_endpoints": {
+            "api/hello/": "기본 테스트 엔드포인트",
+            "api/test-login/": "로그인 테스트",
+            "api/check-users/": "사용자 목록 조회",
+            "api/reset-superuser-password/": "슈퍼유저 비밀번호 재설정",
+            "admin/": "Django 관리자 페이지"
+        }
+    })
 
 urlpatterns = [
+    path('', root_view, name='root'),
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
 ]

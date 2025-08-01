@@ -130,9 +130,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS 설정
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "https://localhost:3000",
     "https://your-vercel-domain.vercel.app",  # Vercel 도메인으로 변경 필요
     "https://-.vercel.app",  # 실제 Vercel 도메인
+    "https://project-production-cd1f.up.railway.app",  # Railway 배포 URL
 ]
+
+# 개발 환경에서는 모든 도메인 허용
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
+else:
+    CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -149,12 +157,21 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 
-# CSRF 설정
+# CSRF 신뢰할 수 있는 도메인 설정 (Railway 배포 용)
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000",
-    "https://your-vercel-domain.vercel.app",
-    "https://-.vercel.app",
+    "https://project-production-cd1f.up.railway.app",
+    "https://*.railway.app",  # Railway 와일드카드 도메인
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
 ]
+
+# 개발 환경에서는 로컬호스트도 신뢰
+if DEBUG:
+    CSRF_TRUSTED_ORIGINS.extend([
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://localhost:3000",
+    ])
 
 # API 뷰에서 CSRF 검증 비활성화
 CSRF_COOKIE_SECURE = False
