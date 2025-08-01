@@ -22,10 +22,12 @@ class Command(BaseCommand):
                 return
 
             # 새로운 관리자 계정 생성
-            user = User.objects.create_superuser(
+            user = User.objects.create_user(
                 username=admin_username,
                 email=admin_email,
-                password=admin_password
+                password=admin_password,
+                is_staff=True,
+                is_superuser=True
             )
 
             self.stdout.write(
