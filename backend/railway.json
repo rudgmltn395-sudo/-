@@ -4,9 +4,9 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "python manage.py runserver 0.0.0.0:$PORT",
-    "healthcheckPath": "/",
-    "healthcheckTimeout": 100,
+    "startCommand": "source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT",
+    "healthcheckPath": "/admin/",
+    "healthcheckTimeout": 300,
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
   }

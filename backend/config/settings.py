@@ -121,6 +121,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# 배포 환경 설정
+if os.environ.get('RAILWAY_ENVIRONMENT'):
+    # Railway 환경에서 실행 중일 때
+    DEBUG = False
+    ALLOWED_HOSTS = ['*']
+    # Railway의 자동 HTTPS 리다이렉트를 위한 설정
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
